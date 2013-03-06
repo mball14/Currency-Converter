@@ -1,6 +1,102 @@
-*.class
+import javax.swing.*;
+import javax.swing.event.ChangeListener;
 
-# Package Files #
-*.jar
-*.war
-*.ear
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.text.NumberFormat;
+
+public class MainClass extends JFrame {
+  
+	JLabel label1, labelPounds, convertedPounds;
+	JTextField userInput;
+	double dollarAmount = 0;
+	float poundsAmount = 0;
+	String tempPounds;
+	
+	public static void main(String[] args){
+		
+		new MainClass();
+		
+	}
+	
+	public MainClass(){
+		
+		this.setSize(200, 400);
+		
+		this.setLocationRelativeTo(null);
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		this.setTitle("U.S. Dollar Currency Converter");
+		
+		JPanel thePanel = new JPanel();
+		
+		label1 = new JLabel("Enter Dollar Amount");
+		
+		thePanel.add(label1);
+		
+		userInput = new JTextField("", 15);
+		
+		userInput.setHorizontalAlignment(JTextField.CENTER);
+		
+		ListenForText lForText = new ListenForText();
+		
+		userInput.addKeyListener(lForText);
+		
+		thePanel.add(userInput);
+		
+		labelPounds = new JLabel("Pounds: ");
+			
+		thePanel.add(labelPounds);
+		
+		convertedPounds = new JLabel();
+		
+		thePanel.add(convertedPounds);
+		
+		this.add(thePanel);
+		
+		this.setVisible(true);
+		
+	}
+	
+	private class ListenForText implements KeyListener{
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {		
+				
+			try {
+				dollarAmount = Double.parseDouble(userInput.getText());
+				
+								
+			} catch (NumberFormatException excep) {
+				
+				JOptionPane.showMessageDialog(MainClass.this, "Enter numbers only please", "Error", JOptionPane.ERROR_MESSAGE);
+				
+			}
+			
+			poundsAmount = (float) (dollarAmount * 0.66);
+			
+			String tempPounds = Float.toString(poundsAmount);
+			
+			convertedPounds.setText(tempPounds);
+
+			
+		}
+		
+	}
+
+}
